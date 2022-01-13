@@ -74,8 +74,7 @@ http {
         <% end %>
 
         location ~ / {
-          set $header_value $http_ENV['KIBANA_ACCESS_HEADER_NAME'];
-          if ($header_value != "<%= ENV['KIBANA_ACCESS_HEADER_VALUE'] %>") {
+          if ($http_bypass != "<%= ENV['KIBANA_ACCESS_HEADER'] %>") {
             return 401;
           }
           <% if ENV['ELASTICSEARCH_AUTH'] %>
