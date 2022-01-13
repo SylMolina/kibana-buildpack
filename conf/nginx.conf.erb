@@ -74,6 +74,10 @@ http {
         <% end %>
 
         location ~ / {
+          set $header_value $http_ENV['KIBANA_ACCESS_HEADER_NAME'];
+          if ($header_value != "<%= ENV['KIBANA_ACCESS_HEADER_VALUE'] %>") {
+            return 401;
+          }
           <% if ENV['ELASTICSEARCH_AUTH'] %>
           proxy_set_header Authorization "Basic <%= ENV['ELASTICSEARCH_AUTH'] %>";
           <% end %>
